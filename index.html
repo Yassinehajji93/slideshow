@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<title>Slideshow</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, ">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<!--Sider div-->
+		<div id="contenedor-slider" class="contenedor-slider">
+ <div id="slider" class="slider">
+    <section class="slider__section"><img src="image/barcelona.png" class="slider__img"></section>
+    <section class="slider__section"><img src="image/sydney.png" class="slider__img"></section>
+    <section class="slider__section"><img src="image/roma.png" class="slider__img"></section>
+    <section class="slider__section"><img src="image/sanfrancisco.png" class="slider__img"></section>
+  </div>
+  <div id="btn-prev" class="btn-prev">&#60;</div>
+  <div id="btn-next" class="btn-next">&#62;</div>
+ </div>
+	
+
+	<!-- JS code-->
+	<script>
+      //almacenar slider en una variable
+var slider = $('#slider');
+//almacenar botones
+var siguiente = $('#btn-next');
+var anterior = $('#btn-prev');
+
+//mover ultima imagen al primer lugar
+$('#slider .slider__section:last').insertBefore('#slider .slider__section:first');
+//mostrar la primera imagen con un margen de -100%
+slider.css('margin-left', '-'+100+'%');
+
+function moverD() {
+	slider.animate({
+		marginLeft:'-'+200+'%'
+	} ,1500, function(){
+		$('#slider .slider__section:first').insertAfter('#slider .slider__section:last');
+		slider.css('margin-left', '-'+100+'%');
+	});
+}
+
+function moverI() {
+	slider.animate({
+		marginLeft:0
+	} ,1500, function(){
+		$('#slider .slider__section:last').insertBefore('#slider .slider__section:first');
+		slider.css('margin-left', '-'+100+'%');
+	});
+}
+
+function autoplay() {
+	interval = setInterval(function(){
+		moverD();
+	}, 3500);
+}
+siguiente.on('click',function() {
+	moverD();
+	clearInterval(interval);
+	autoplay();
+});
+
+anterior.on('click',function() {
+	moverI();
+	clearInterval(interval);
+	autoplay();
+});
+
+
+autoplay();
+
+	</script>
+</body>
+</html>
